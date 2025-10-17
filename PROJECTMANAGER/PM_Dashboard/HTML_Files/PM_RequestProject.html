@@ -62,7 +62,7 @@
         <div class="dashboard-container">
             <div class="card form-card">
                 <h3 class="card-title">Resource Request Form</h3>
-                <form class="request-form">
+                <form id="requestForm" class="request-form">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="projectName">Project Name</label>
@@ -125,10 +125,13 @@
                         <textarea id="notes" rows="4" placeholder="Enter any additional information..."></textarea>
                     </div>
 
-                    <button type="submit" class="btn-primary">Submit Request</button>
+                    <button type="submit" id="submitRequestBtn" class="btn-primary">Submit Request</button>
                 </form>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../JS_Files/PM_dashboard.js"></script>
 </body>
 </html>
