@@ -475,6 +475,32 @@ body {
     margin-top: 4px;
 }
 
+/* Pending Requests for Project Manager Dashboard */
+.pending-requests-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.request-item-pm {
+    padding: 16px;
+    background-color: var(--bg-gray);
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+}
+
+.request-item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.request-item-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
 /* Request Form */
 .form-card {
     max-width: 800px;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Project Manager</title>
-   <link rel="stylesheet" href="../../CSS_Files/styles.css">
+    <link rel="stylesheet" href="../../CSS_Files/styles.css">
 </head>
 <body>
     <!-- Sidebar -->
@@ -70,17 +70,17 @@
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-icon green">👥</div>
-                    <h3 class="stat-value">8</h3>
-                    <p class="stat-title">Available Resources</p>
-                    <p class="stat-change neutral">2 pending approval</p>
+                    <div class="stat-icon orange">⚠️</div>
+                    <h3 class="stat-value">1</h3>
+                    <p class="stat-title">Pending Requests</p>
+                    <p class="stat-change warning">Requires attention</p>
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-icon orange">⚠️</div>
-                    <h3 class="stat-value">5</h3>
-                    <p class="stat-title">Pending Approvals</p>
-                    <p class="stat-change warning">Requires attention</p>
+                    <div class="stat-icon green">✓</div>
+                    <h3 class="stat-value">8</h3>
+                    <p class="stat-title">Approved Resources</p>
+                    <p class="stat-change positive">All active</p>
                 </div>
             </div>
 
@@ -139,76 +139,17 @@
                     </div>
                 </div>
 
-                <!-- Resource Availability -->
+                <!-- Pending Requests (Project Manager Only) -->
                 <div class="card">
-                    <h3 class="card-title">Resource Availability</h3>
-                    <div class="resources-list">
-                        <div class="resource-item">
-                            <div class="resource-info">
-                                <div class="avatar-large">JD</div>
-                                <div>
-                                    <p class="resource-name">John Doe</p>
-                                    <p class="resource-role">Senior Developer</p>
-                                </div>
-                            </div>
-                            <div class="resource-status">
-                                <span class="status-badge available">
-                                    <span class="status-dot"></span>
-                                    Available
-                                </span>
-                                <p class="project-count">2 projects</p>
-                            </div>
+                    <h3 class="card-title">Pending Requests</h3>
+                    <div class="pending-requests-content">
+                        <div class="request-item-pm">
+                            <p class="request-item-title">Senior UI/UX Designer needed</p>
+                            <p class="request-item-subtitle">Requested: Oct 15, 2025</p>
                         </div>
-
-                        <div class="resource-item">
-                            <div class="resource-info">
-                                <div class="avatar-large">SS</div>
-                                <div>
-                                    <p class="resource-name">Sarah Smith</p>
-                                    <p class="resource-role">UI/UX Designer</p>
-                                </div>
-                            </div>
-                            <div class="resource-status">
-                                <span class="status-badge busy">
-                                    <span class="status-dot"></span>
-                                    Busy
-                                </span>
-                                <p class="project-count">3 projects</p>
-                            </div>
-                        </div>
-
-                        <div class="resource-item">
-                            <div class="resource-info">
-                                <div class="avatar-large">MJ</div>
-                                <div>
-                                    <p class="resource-name">Mike Johnson</p>
-                                    <p class="resource-role">Backend Developer</p>
-                                </div>
-                            </div>
-                            <div class="resource-status">
-                                <span class="status-badge available">
-                                    <span class="status-dot"></span>
-                                    Available
-                                </span>
-                                <p class="project-count">1 project</p>
-                            </div>
-                        </div>
-
-                        <div class="resource-item">
-                            <div class="resource-info">
-                                <div class="avatar-large">AG</div>
-                                <div>
-                                    <p class="resource-name">Anna Garcia</p>
-                                    <p class="resource-role">Project Manager</p>
-                                </div>
-                            </div>
-                            <div class="resource-status">
-                                <span class="status-badge available">
-                                    <span class="status-dot"></span>
-                                    Available
-                                </span>
-                                <p class="project-count">4 projects</p>
-                            </div>
+                        <div class="request-item-pm">
+                            <p class="request-item-title">Backend Developer for API</p>
+                            <p class="request-item-subtitle">Requested: Oct 12, 2025</p>
                         </div>
                     </div>
                 </div>
