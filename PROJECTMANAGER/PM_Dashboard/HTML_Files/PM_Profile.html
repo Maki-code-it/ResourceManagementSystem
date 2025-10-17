@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Project Manager</title>
+    <link rel="stylesheet" href="../../CSS_Files/styles.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="profile-circle">PM</div>
+            <div class="profile-info">
+                <h2>Project Manager</h2>
+                <p>Admin Portal</p>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="PM_dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="PM_RequestProject.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span>Request Resources</span>
+            </a>
+            <a href="PM_MyProjects.html" class="nav-item">
+                <span class="nav-icon">📁</span>
+                <span>My Projects</span>
+            </a>
+            <a href="PM_Profile.html" class="nav-item active">
+                <span class="nav-icon">👤</span>
+                <span>Profile</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div>
+                <h1>Profile</h1>
+                <p class="subtitle">Manage your professional information</p>
+            </div>
+            <div class="header-actions">
+                <button class="notification-btn">
+                    🔔
+                    <span class="notification-badge"></span>
+                </button>
+                <div class="profile-circle">PM</div>
+            </div>
+        </header>
+
+        <!-- Profile Content -->
+        <div class="dashboard-container">
+            <div class="profile-layout">
+                <!-- Profile Info Card -->
+                <div class="card profile-card">
+                    <div class="profile-header-section">
+                        <div class="profile-avatar-large">PM</div>
+                        <div class="profile-header-info">
+                            <h2>Anna Garcia</h2>
+                            <p class="profile-role">Senior Project Manager</p>
+                            <span class="status-badge available">
+                                <span class="status-dot"></span>
+                                Available
+                            </span>
+                        </div>
+                        <button class="btn-secondary">Edit Profile</button>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="profile-stat-item">
+                            <p class="profile-stat-value">12</p>
+                            <p class="profile-stat-label">Active Projects</p>
+                        </div>
+                        <div class="profile-stat-item">
+                            <p class="profile-stat-value">45</p>
+                            <p class="profile-stat-label">Completed</p>
+                        </div>
+                        <div class="profile-stat-item">
+                            <p class="profile-stat-value">28</p>
+                            <p class="profile-stat-label">Team Members</p>
+                        </div>
+                        <div class="profile-stat-item">
+                            <p class="profile-stat-value">5</p>
+                            <p class="profile-stat-label">Years Experience</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Information -->
+                <div class="card">
+                    <h3 class="card-title">Professional Information</h3>
+                    <div class="profile-info-grid">
+                        <div class="profile-info-item">
+                            <p class="info-label">Email</p>
+                            <p class="info-value">anna.garcia@company.com</p>
+                        </div>
+                        <div class="profile-info-item">
+                            <p class="info-label">Phone No.</p>
+                            <p class="info-value">+1 (555) 123-4567</p>
+                        </div>
+                        <div class="profile-info-item">
+                            <p class="info-label">Location</p>
+                            <p class="info-value">California, US</p>
+                        </div>
+                        <div class="profile-info-item">
+                            <p class="info-label">Department</p>
+                            <p class="info-value">IT Department</p>
+                        </div>
+                        <div class="profile-info-item">
+                            <p class="info-label">Employee ID</p>
+                            <p class="info-value">PM-2019-001</p>
+                        </div>
+                        <div class="profile-info-item">
+                            <p class="info-label">Join Date</p>
+                            <p class="info-value">January 15, 2019</p>
+                        </div>
+                    </div>
+                    <button class="btn-primary">Update Information</button>
+                </div>
+
+                <!-- Skills & Expertise -->
+                <div class="card">
+                    <h3 class="card-title">Skills & Expertise</h3>
+                    <div class="skills-container">
+                        <span class="skill-tag">Project Management</span>
+                        <span class="skill-tag">Agile/Scrum</span>
+                        <span class="skill-tag">Team Leadership</span>
+                        <span class="skill-tag">Risk Management</span>
+                        <span class="skill-tag">Stakeholder Communication</span>
+                        <span class="skill-tag">Budget Planning</span>
+                        <span class="skill-tag">JIRA</span>
+                        <span class="skill-tag">MS Project</span>
+                        <span class="skill-tag">Resource Allocation</span>
+                    </div>
+                    <button class="btn-secondary">Add Skills</button>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="card">
+                    <h3 class="card-title">Recent Activity</h3>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon blue">📁</div>
+                            <div class="activity-content">
+                                <p class="activity-text">Created new project "E-commerce Platform Redesign"</p>
+                                <p class="activity-time">2 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon green">✅</div>
+                            <div class="activity-content">
+                                <p class="activity-text">Approved resource request for Mobile Banking App</p>
+                                <p class="activity-time">5 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon orange">👥</div>
+                            <div class="activity-content">
+                                <p class="activity-text">Added 3 new team members to Customer Portal project</p>
+                                <p class="activity-time">1 day ago</p>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon blue">📊</div>
+                            <div class="activity-content">
+                                <p class="activity-text">Updated project timeline for Mobile Banking App</p>
+                                <p class="activity-time">2 days ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

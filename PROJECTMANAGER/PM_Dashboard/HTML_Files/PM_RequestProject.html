@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Resources - Project Manager</title>
+    <link rel="stylesheet" href="../../CSS_Files/styles.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="profile-circle">PM</div>
+            <div class="profile-info">
+                <h2>Project Manager</h2>
+                <p>Admin Portal</p>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="PM_dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="PM_RequestProject.html" class="nav-item active">
+                <span class="nav-icon">📝</span>
+                <span>Request Resources</span>
+            </a>
+            <a href="PM_MyProjects.html" class="nav-item">
+                <span class="nav-icon">📁</span>
+                <span>My Projects</span>
+            </a>
+            <a href="PM_Profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span>Profile</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div>
+                <h1>Request Resources</h1>
+                <p class="subtitle">Submit a resource request for your project</p>
+            </div>
+            <div class="header-actions">
+                <button class="notification-btn">
+                    🔔
+                    <span class="notification-badge"></span>
+                </button>
+                <div class="profile-circle">PM</div>
+            </div>
+        </header>
+
+        <!-- Request Form -->
+        <div class="dashboard-container">
+            <div class="card form-card">
+                <h3 class="card-title">Resource Request Form</h3>
+                <form class="request-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="projectName">Project Name</label>
+                            <input type="text" id="projectName" placeholder="Enter project name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="resourceType">Resource Type</label>
+                            <select id="resourceType" required>
+                                <option value="">Select resource type</option>
+                                <option value="developer">Developer</option>
+                                <option value="designer">Designer</option>
+                                <option value="pm">Project Manager</option>
+                                <option value="qa">QA Tester</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="numResources">Number of Resources Needed</label>
+                        <input type="number" id="numResources" placeholder="0" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="skills">Required Skills</label>
+                        <input type="text" id="skills" placeholder="e.g. React, Node.js, MongoDB" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="duration">Expected Duration</label>
+                            <select id="duration" required>
+                                <option value="">Select duration</option>
+                                <option value="1-2weeks">1-2 weeks</option>
+                                <option value="1month">1 month</option>
+                                <option value="3months">3 months</option>
+                                <option value="6months">6+ months</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <select id="priority" required>
+                            <option value="">Select priority</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" rows="4" placeholder="Enter any additional information..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
