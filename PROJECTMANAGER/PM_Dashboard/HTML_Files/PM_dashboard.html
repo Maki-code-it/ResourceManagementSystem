@@ -1,86 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project Manager Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../../CSS_Files/PM_dashboard.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Project Manager</title>
+   <link rel="stylesheet" href="../../CSS_Files/styles.css">
 </head>
 <body>
-  <div class="d-flex">
     <!-- Sidebar -->
-    <div class="sidebar d-flex flex-column p-3">
-      <div class="text-center mb-4">
-        <img src="../Images/profile.jpg" alt="Profile" class="profile-img mb-2">
-        <h5 class="mb-0 text-white">John Doe</h5>
-        <small class="text-light">john.doe@example.com</small>
-      </div>
-
-      <ul class="nav flex-column mt-4 flex-grow-1">
-        <li class="nav-item mb-2">
-          <a href="#" class="nav-link active"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
-        </li>
-        <li class="nav-item mb-2">
-          <a href="../../PM_RequestProject/HTML_Files/PM_RequestResources.html" class="nav-link"><i class="bi bi-box-seam me-2"></i>Request Resource</a>
-        </li>
-        <li class="nav-item mb-2">
-          <a href="#" class="nav-link"><i class="bi bi-briefcase me-2"></i>My Projects</a>
-        </li>
-        <li class="nav-item mb-2">
-          <a href="#" class="nav-link"><i class="bi bi-person me-2"></i>Profile</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link"><i class="bi bi-gear me-2"></i>Settings</a>
-        </li>
-      </ul>
-
-      <!-- Logout Button -->
-      <div class="logout-section mt-auto">
-        <a href="../PHP_Files/logout.php" class="logout-btn">
-          <i class="bi bi-box-arrow-right me-2"></i> Logout
-        </a>
-      </div>
-    </div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="profile-circle">PM</div>
+            <div class="profile-info">
+                <h2>Project Manager</h2>
+                <p>Admin Portal</p>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="PM_dashboard.html" class="nav-item active">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="PM_RequestProject.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span>Request Resources</span>
+            </a>
+            <a href="PM_MyProjects.html" class="nav-item">
+                <span class="nav-icon">📁</span>
+                <span>My Projects</span>
+            </a>
+            <a href="PM_Profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span>Profile</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </aside>
 
     <!-- Main Content -->
-    <div class="content flex-grow-1 p-4">
-      <h3 class="mb-4">Welcome, Project Manager!</h3>
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div>
+                <h1>Dashboard</h1>
+                <p class="subtitle">Welcome back, Project Manager</p>
+            </div>
+            <div class="header-actions">
+                <button class="notification-btn">
+                    🔔
+                    <span class="notification-badge"></span>
+                </button>
+                <div class="profile-circle">PM</div>
+            </div>
+        </header>
 
-      <!-- Dashboard Summary -->
-      <div class="row g-4 mb-4">
-        <div class="col-md-4">
-          <div class="summary-card active-projects">
-            <i class="bi bi-briefcase-fill"></i>
-            <div>
-              <h4 id="activeCount">5</h4>
-              <p>Active Projects</p>
+        <!-- Dashboard Content -->
+        <div class="dashboard-container">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">📁</div>
+                    <h3 class="stat-value">12</h3>
+                    <p class="stat-title">Active Projects</p>
+                    <p class="stat-change positive">+2 this month</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon green">👥</div>
+                    <h3 class="stat-value">8</h3>
+                    <p class="stat-title">Available Resources</p>
+                    <p class="stat-change neutral">2 pending approval</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon orange">⚠️</div>
+                    <h3 class="stat-value">5</h3>
+                    <p class="stat-title">Pending Approvals</p>
+                    <p class="stat-change warning">Requires attention</p>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="summary-card pending-requests">
-            <i class="bi bi-hourglass-split"></i>
-            <div>
-              <h4 id="pendingCount">3</h4>
-              <p>Pending Requests</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="summary-card completed-projects">
-            <i class="bi bi-check-circle-fill"></i>
-            <div>
-              <h4 id="completedCount">12</h4>
-              <p>Completed Projects</p>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <p>Select an option from the sidebar to begin.</p>
+            <!-- Two Column Layout -->
+            <div class="content-grid">
+                <!-- Recent Projects -->
+                <div class="card">
+                    <h3 class="card-title">Recent Projects</h3>
+                    <div class="projects-list">
+                        <div class="project-item">
+                            <div class="project-header">
+                                <h4>E-commerce Platform Redesign</h4>
+                                <span class="badge badge-high">High</span>
+                            </div>
+                            <div class="progress-section">
+                                <div class="progress-label">
+                                    <span>Progress</span>
+                                    <span>65%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%"></div>
+                                </div>
+                            </div>
+                            <div class="project-footer">
+                                <span class="deadline">Deadline: Dec 15, 2025</span>
+                                <div class="team-avatars">
+                                    <div class="avatar">J</div>
+                                    <div class="avatar">S</div>
+                                    <div class="avatar">M</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-item">
+                            <div class="project-header">
+                                <h4>Mobile Banking App</h4>
+                                <span class="badge badge-medium">Medium</span>
+                            </div>
+                            <div class="progress-section">
+                                <div class="progress-label">
+                                    <span>Progress</span>
+                                    <span>40%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 40%"></div>
+                                </div>
+                            </div>
+                            <div class="project-footer">
+                                <span class="deadline">Deadline: Jan 30, 2026</span>
+                                <div class="team-avatars">
+                                    <div class="avatar">A</div>
+                                    <div class="avatar">D</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource Availability -->
+                <div class="card">
+                    <h3 class="card-title">Resource Availability</h3>
+                    <div class="resources-list">
+                        <div class="resource-item">
+                            <div class="resource-info">
+                                <div class="avatar-large">JD</div>
+                                <div>
+                                    <p class="resource-name">John Doe</p>
+                                    <p class="resource-role">Senior Developer</p>
+                                </div>
+                            </div>
+                            <div class="resource-status">
+                                <span class="status-badge available">
+                                    <span class="status-dot"></span>
+                                    Available
+                                </span>
+                                <p class="project-count">2 projects</p>
+                            </div>
+                        </div>
+
+                        <div class="resource-item">
+                            <div class="resource-info">
+                                <div class="avatar-large">SS</div>
+                                <div>
+                                    <p class="resource-name">Sarah Smith</p>
+                                    <p class="resource-role">UI/UX Designer</p>
+                                </div>
+                            </div>
+                            <div class="resource-status">
+                                <span class="status-badge busy">
+                                    <span class="status-dot"></span>
+                                    Busy
+                                </span>
+                                <p class="project-count">3 projects</p>
+                            </div>
+                        </div>
+
+                        <div class="resource-item">
+                            <div class="resource-info">
+                                <div class="avatar-large">MJ</div>
+                                <div>
+                                    <p class="resource-name">Mike Johnson</p>
+                                    <p class="resource-role">Backend Developer</p>
+                                </div>
+                            </div>
+                            <div class="resource-status">
+                                <span class="status-badge available">
+                                    <span class="status-dot"></span>
+                                    Available
+                                </span>
+                                <p class="project-count">1 project</p>
+                            </div>
+                        </div>
+
+                        <div class="resource-item">
+                            <div class="resource-info">
+                                <div class="avatar-large">AG</div>
+                                <div>
+                                    <p class="resource-name">Anna Garcia</p>
+                                    <p class="resource-role">Project Manager</p>
+                                </div>
+                            </div>
+                            <div class="resource-status">
+                                <span class="status-badge available">
+                                    <span class="status-dot"></span>
+                                    Available
+                                </span>
+                                <p class="project-count">4 projects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </body>
 </html>
