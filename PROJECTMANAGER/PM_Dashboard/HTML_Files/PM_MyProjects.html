@@ -5,20 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Projects - Project Manager</title>
     <link rel="stylesheet" href="../../CSS_Files/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../JS_Files/PM_MyProjects.js"></script>
 </head>
 <body>
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="profile-circle">PM</div>
+            <div class="profile-circle" id="sidebarInitials">PM</div>
             <div class="profile-info">
-                <h2>Project Manager</h2>
-                <p>Admin Portal</p>
+                <h2 id="sidebarName">Project Manager</h2>
+                <p id="sidebarEmail">manager@example.com</p>
             </div>
         </div>
         
         <nav class="sidebar-nav">
-            <a href="PM_dashboard.html" class="nav-item">
+            <a href="PM_dashboard.php" class="nav-item">
                 <span class="nav-icon">📊</span>
                 <span>Dashboard</span>
             </a>
@@ -30,18 +32,13 @@
                 <span class="nav-icon">📁</span>
                 <span>My Projects</span>
             </a>
-            <a href="PM_Profile.html" class="nav-item">
+            <a href="PM_Profile.php" class="nav-item">
                 <span class="nav-icon">👤</span>
                 <span>Profile</span>
             </a>
             <a href="#" class="nav-item">
                 <span class="nav-icon">⚙️</span>
                 <span>Settings</span>
-            </a>
-            
-            <a href="logout.php" class="nav-item logout">
-                <span class="nav-icon">🚪</span>
-                <span>Logout</span>
             </a>
         </nav>
     </aside>
@@ -59,7 +56,7 @@
                     🔔
                     <span class="notification-badge"></span>
                 </button>
-                <div class="profile-circle">PM</div>
+                <div class="profile-circle" id="headerInitials">PM</div>
             </div>
         </header>
 
@@ -69,142 +66,24 @@
             <div class="projects-header">
                 <div class="search-box">
                     <span class="search-icon">🔍</span>
-                    <input type="text" placeholder="Search projects...">
+                    <input type="text" id="searchInput" placeholder="Search projects..." onkeyup="searchProjects()">
                 </div>
-                <button class="btn-primary">
+                <button class="btn-primary" onclick="redirectToNewProject()">
                     <span>➕</span> New Project
                 </button>
             </div>
 
             <!-- Projects List -->
-            <div class="projects-list-view">
-                <div class="project-card">
-                    <div class="project-card-header">
-                        <div class="project-card-title">
-                            <h3>E-commerce Platform Redesign</h3>
-                            <span class="badge badge-inprogress">In Progress</span>
-                        </div>
-                        <div class="project-actions">
-                            <button class="icon-btn">✏️</button>
-                            <button class="icon-btn">🗑️</button>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card-body">
-                        <div class="project-detail">
-                            <p class="detail-label">Progress</p>
-                            <div class="progress-wrapper">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 65%"></div>
-                                </div>
-                                <span class="progress-text">65%</span>
-                            </div>
-                        </div>
-                        
-                        <div class="project-detail">
-                            <p class="detail-label">Deadline</p>
-                            <p class="detail-value">
-                                <span class="icon">🕐</span>
-                                Dec 15, 2025
-                            </p>
-                        </div>
-                        
-                        <div class="project-detail">
-                            <p class="detail-label">Team</p>
-                            <div class="team-avatars">
-                                <div class="avatar" title="John">J</div>
-                                <div class="avatar" title="Sarah">S</div>
-                                <div class="avatar" title="Mike">M</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-card-header">
-                        <div class="project-card-title">
-                            <h3>Mobile Banking App</h3>
-                            <span class="badge badge-active">Active</span>
-                        </div>
-                        <div class="project-actions">
-                            <button class="icon-btn">✏️</button>
-                            <button class="icon-btn">🗑️</button>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card-body">
-                        <div class="project-detail">
-                            <p class="detail-label">Progress</p>
-                            <div class="progress-wrapper">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 40%"></div>
-                                </div>
-                                <span class="progress-text">40%</span>
-                            </div>
-                        </div>
-                        
-                        <div class="project-detail">
-                            <p class="detail-label">Deadline</p>
-                            <p class="detail-value">
-                                <span class="icon">🕐</span>
-                                Jan 30, 2026
-                            </p>
-                        </div>
-                        
-                        <div class="project-detail">
-                            <p class="detail-label">Team</p>
-                            <div class="team-avatars">
-                                <div class="avatar" title="Anna">A</div>
-                                <div class="avatar" title="David">D</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-card-header">
-                        <div class="project-card-title">
-                            <h3>Customer Portal Development</h3>
-                            <span class="badge badge-active">Active</span>
-                        </div>
-                        <div class="project-actions">
-                            <button class="icon-btn">✏️</button>
-                            <button class="icon-btn">🗑️</button>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card-body">
-                        <div class="project-detail">
-                            <p class="detail-label">Progress</p>
-                            <div class="progress-wrapper">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 80%"></div>
-                                </div>
-                                <span class="progress-text">80%</span>
-                            </div>
-                        </div>
-                        
-                        <div class="project-detail">
-                            <p class="detail-label">Deadline</p>
-                            <p class="detail-value">
-                                <span class="icon">🕐</span>
-                                Nov 30, 2025
-                            </p>
-                        </div>
-                        
-                        <div class="project-detail">
-                            <p class="detail-label">Team</p>
-                            <div class="team-avatars">
-                                <div class="avatar" title="Emma">E</div>
-                                <div class="avatar" title="Robert">R</div>
-                                <div class="avatar" title="Lisa">L</div>
-                                <div class="avatar" title="Tom">T</div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="projects-list-view" id="projectsList">
+                <!-- Projects will be loaded here by JavaScript -->
+                <div style="text-align: center; padding: 40px; color: #666;">
+                    <p>Loading projects...</p>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../JS_Files/PM_MyProjects.js"></script>
 </body>
 </html>
