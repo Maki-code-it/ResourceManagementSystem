@@ -6,7 +6,6 @@
     <title>Profile - Project Manager</title>
     <link rel="stylesheet" href="../../CSS_Files/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </head>
 <body>
     <!-- Sidebar -->
@@ -71,7 +70,9 @@
                 <!-- Profile Info Card -->
                 <div class="card profile-card">
                     <div class="profile-header-section">
-                        <div class="profile-avatar-large">PM</div>
+                        <div class="profile-avatar-large">
+                            <img id="profile-pic" src="/ResourceManagementSystem/<?= $profile_pic ?>" alt="Profile Picture">
+                        </div>                        
                         <div class="profile-header-info">
                             <h2>Anna Garcia</h2>
                             <p class="profile-role">Senior Project Manager</p>
@@ -80,7 +81,43 @@
                                 Available
                             </span>
                         </div>
-                        <button class="btn-secondary">Edit Profile</button>
+                        <button id="edit-profile-btn" class="btn-secondary">Edit Profile</button>
+                    </div>
+
+                    <!-- 🪟 Edit Profile Popup Modal -->
+                    <div id="editProfileModal" class="modal">
+                        <div class="modal-content">
+                        <span class="close-btn">&times;</span>
+                        <h2>Edit Profile</h2>
+                    
+                        <form id="editProfileForm" enctype="multipart/form-data">
+                            <div class="form-group">
+                            <label for="edit-name">Full Name</label>
+                            <input type="text" id="edit-name" name="name" >
+                            </div>
+                    
+                            <div class="form-group">
+                            <label for="edit-title">Job Title</label>
+                            <input type="text" id="edit-title" name="job_title">
+                            </div>
+                    
+                            <div class="form-group">
+                            <label for="edit-status">Availability Status</label>
+                            <select id="edit-status" name="status">
+                                <option value="Available">Available</option>
+                                <option value="Busy">Busy</option>
+                                <option value="On Leave">On Leave</option>
+                            </select>
+                            </div>
+                    
+                            <div class="form-group">
+                            <label for="edit-pic">Profile Picture</label>
+                            <input type="file" id="edit-pic" name="profile_pic" accept="image/*">
+                            </div>
+                    
+                            <button type="submit" class="btn-primary">Save Changes</button>
+                        </form>
+                        </div>
                     </div>
 
                     <div class="profile-stats">
@@ -132,25 +169,19 @@
                             <p class="info-value">January 15, 2019</p>
                         </div>
                     </div>
-                    <button class="btn-primary">Update Information</button>
+                    <button id="edit-prof-btn" class="btn-primary">Update Information</button>
                 </div>
 
                 <!-- Skills & Expertise -->
                 <div class="card">
                     <h3 class="card-title">Skills & Expertise</h3>
-                    <div class="skills-container">
-                        <span class="skill-tag">Project Management</span>
-                        <span class="skill-tag">Agile/Scrum</span>
-                        <span class="skill-tag">Team Leadership</span>
-                        <span class="skill-tag">Risk Management</span>
-                        <span class="skill-tag">Stakeholder Communication</span>
-                        <span class="skill-tag">Budget Planning</span>
-                        <span class="skill-tag">JIRA</span>
-                        <span class="skill-tag">MS Project</span>
-                        <span class="skill-tag">Resource Allocation</span>
+                    <div id="skillsContainer" class="skills-container">
+                      <span class="skill-tag">Project Management</span>
+                      <span class="skill-tag">Agile/Scrum</span>
+                      <span class="skill-tag">Team Leadership</span>
                     </div>
-                    <button class="btn-secondary">Add Skills</button>
-                </div>
+                    <button class="btn-secondary" id="addSkillBtn">Add Skills</button>
+                  </div>
 
                 <!-- Recent Activity -->
                 <div class="card">
@@ -189,6 +220,56 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div id="editProfModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Edit Professional Information</h2>
+
+            <form id="editProfForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" >
+                </div>
+                <div class="form-group">
+                    <label>Phone No.</label>
+                    <input type="text" name="phone" >
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="location">
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" name="department">
+                </div>
+                <div class="form-group">
+                    <label>Employee ID</label>
+                    <input type="text" name="employee_id">
+                </div>
+                <div class="form-group">
+                    <label>Join Date</label>
+                    <input type="date" name="join_date">
+                </div>
+
+                <button type="submit" class="btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+       <!-- Add Skill Modal -->
+       <div id="addSkillModal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h2>Add Skill</h2>
+          <form id="addSkillForm">
+            <input type="text" id="newSkillInput" name="skill" placeholder="Enter skill" >
+            <button type="button" id="saveSkillBtn">Save</button>
+          </form>
+        </div>
+      </div>
+          
 
     <script src="../JS_Files/PM_Profile.js"></script>
 </body>

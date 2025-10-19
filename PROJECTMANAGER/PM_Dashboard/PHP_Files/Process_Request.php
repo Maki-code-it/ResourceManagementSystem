@@ -7,7 +7,15 @@ header("Content-Type: application/json");
 require_once __DIR__ . '/../../../database.php';
 require_once "ResourceRequest.php";
 
+session_start(); 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if the user is logged in
+    if (!isset($_SESSION['user_id'])) {
+        echo json_encode(["status" => "error", "message" => "User not authenticated"]);
+        exit;
+    }
+
     $database = new Database();
     $db = $database->connect();
 
@@ -24,7 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         "notes" => $_POST['notes'] ?? ''
     ];
 
-    $response = $handler->submitRequest($data);
+    $userId = $_SESSION['user_id']; 
+
+    // Pass both $data and $userId
+    $response = $handler->submitRequest($data, $userId);
     echo json_encode($response);
 } else {
     echo json_encode(["status" => "error", "message" => "Invalid request method"]);
