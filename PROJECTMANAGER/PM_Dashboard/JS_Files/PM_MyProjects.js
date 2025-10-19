@@ -1,26 +1,15 @@
-// Load projects on page load
 document.addEventListener('DOMContentLoaded', async () => {
     await loadProjects();
 });
 
 async function loadProjects() {
     try {
-        // Both JS_Files and PHP_Files are in PM_Dashboard, so go up one level then into PHP_Files
         const response = await fetch('../PHP_Files/Get_Projects.php');
+        const text = await response.text();
+        console.log('Get_Projects response:', text);
         
-        console.log('Response status:', response.status); // Debug log
-        const data = await response.json();
+        const data = JSON.parse(text);
 
-        if (data.status === 'error') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: data.message || 'Failed to load projects'
-            });
-            return;
-        }
-
-        // Update manager info
         if (data.manager) {
             document.getElementById('sidebarInitials').textContent = data.manager.initials;
             document.getElementById('headerInitials').textContent = data.manager.initials;
@@ -28,16 +17,9 @@ async function loadProjects() {
             document.getElementById('sidebarEmail').textContent = data.manager.email;
         }
 
-        // Render projects
         renderProjects(data.projects);
-
     } catch (error) {
-        console.error(error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Failed to load projects. Please try again later.'
-        });
+        console.error('Error loading projects:', error);
     }
 }
 
@@ -54,7 +36,7 @@ function renderProjects(projects) {
     }
 
     projectsList.innerHTML = projects.map(project => `
-        <div class="project-card" data-project-name="${project.project_name.toLowerCase()}">
+        <div class="project-card" data-project-name="${project.project_name.toLowerCase()}" data-project-id="${project.id}">
             <div class="project-card-header">
                 <div class="project-card-title">
                     <h3>${escapeHtml(project.project_name)}</h3>
@@ -63,8 +45,8 @@ function renderProjects(projects) {
                     </span>
                 </div>
                 <div class="project-actions">
-                    <button class="icon-btn" onclick="editProject(${project.id})" title="Edit">✏️</button>
-                    <button class="icon-btn" onclick="deleteProject(${project.id})" title="Delete">🗑️</button>
+                    <button class="icon-btn edit-btn" type="button" data-project-id="${project.id}" title="Edit">✏️</button>
+                    <button class="icon-btn delete-btn" type="button" data-project-id="${project.id}" title="Delete">🗑️</button>
                 </div>
             </div>
             
@@ -82,7 +64,7 @@ function renderProjects(projects) {
                 <div class="project-detail">
                     <p class="detail-label">Deadline</p>
                     <p class="detail-value">
-                        <span class="icon">🕐</span>
+                        <span class="icon">📅</span>
                         ${project.deadline}
                     </p>
                 </div>
@@ -103,6 +85,30 @@ function renderProjects(projects) {
             </div>
         </div>
     `).join('');
+
+    attachButtonListeners();
+}
+
+function attachButtonListeners() {
+    document.querySelectorAll('.edit-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const projectId = this.getAttribute('data-project-id');
+            console.log('Edit button clicked for project ID:', projectId, 'Type:', typeof projectId);
+            editProject(projectId);
+        });
+    });
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const projectId = this.getAttribute('data-project-id');
+            console.log('Delete button clicked for project ID:', projectId);
+            deleteProject(projectId);
+        });
+    });
 }
 
 function renderTeamMembers(teamMembers) {
@@ -127,12 +133,54 @@ function redirectToNewProject() {
 }
 
 async function editProject(projectId) {
-    const result = await Swal.fire({
-        icon: 'info',
-        title: 'Coming Soon',
-        text: 'Edit functionality is under development.',
-        confirmButtonText: 'OK'
-    });
+    try {
+        // Ensure project ID is a number
+        const numericId = parseInt(projectId, 10);
+        console.log('editProject called with ID:', numericId);
+
+        if (!numericId || numericId <= 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Invalid project ID'
+            });
+            return;
+        }
+
+        const url = `../PHP_Files/Get_Project.php?project_id=${numericId}`;
+        console.log('Fetching from URL:', url);
+
+        const response = await fetch(url);
+        console.log('Response status:', response.status);
+
+        const text = await response.text();
+        console.log('Response body:', text);
+
+        const data = JSON.parse(text);
+        console.log('Parsed data:', data);
+
+        if (data.status === 'success' && data.project) {
+            console.log('Project loaded successfully:', data.project);
+            sessionStorage.setItem('editProjectData', JSON.stringify({
+                projectId: numericId,
+                project: data.project
+            }));
+            window.location.href = `PM_RequestProject.html?edit=${numericId}`;
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: data.message || 'Failed to load project'
+            });
+        }
+    } catch (error) {
+        console.error('Error in editProject:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to load project: ' + error.message
+        });
+    }
 }
 
 async function deleteProject(projectId) {
@@ -149,13 +197,25 @@ async function deleteProject(projectId) {
 
     if (!result.isConfirmed) return;
 
+    Swal.fire({
+        title: 'Deleting...',
+        text: 'Please wait',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
     try {
         const response = await fetch('../PHP_Files/Delete_Project.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
-            body: JSON.stringify({ project_id: projectId })
+            body: JSON.stringify({ 
+                project_id: parseInt(projectId, 10)
+            })
         });
 
         const data = await response.json();
@@ -168,7 +228,7 @@ async function deleteProject(projectId) {
                 showConfirmButton: false,
                 timer: 1500
             });
-            await loadProjects(); // Reload projects
+            await loadProjects();
         } else {
             Swal.fire({
                 icon: 'error',
@@ -177,11 +237,11 @@ async function deleteProject(projectId) {
             });
         }
     } catch (error) {
-        console.error(error);
+        console.error('Error deleting project:', error);
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'Something went wrong. Please try again later.'
+            text: 'Failed to delete project'
         });
     }
 }
