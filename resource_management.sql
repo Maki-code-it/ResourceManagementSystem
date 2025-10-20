@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2025 at 03:02 PM
+-- Generation Time: Oct 20, 2025 at 04:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,6 +20,44 @@ SET time_zone = "+00:00";
 --
 -- Database: `resource_management`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `projects`
+--
+
+CREATE TABLE `projects` (
+  `project_id` int(11) NOT NULL,
+  `project_code` varchar(50) NOT NULL,
+  `project_title` varchar(150) NOT NULL,
+  `project_description` text DEFAULT NULL,
+  `project_category` varchar(100) DEFAULT NULL,
+  `priority_level` enum('Low','Medium','High','Critical') DEFAULT 'Medium',
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `expected_duration` varchar(50) DEFAULT NULL,
+  `progress` decimal(5,2) DEFAULT 0.00,
+  `project_phase` enum('Planning','In Progress','Testing','Deployment','Completed','On Hold','Cancelled') DEFAULT 'Planning',
+  `status` enum('Draft','Active','Completed','Cancelled') DEFAULT 'Draft',
+  `created_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `project_requirements`
+--
+
+CREATE TABLE `project_requirements` (
+  `requirement_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `required_role` varchar(100) NOT NULL,
+  `quantity_needed` int(11) DEFAULT 1,
+  `remarks` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -47,7 +85,8 @@ CREATE TABLE `resource_requests` (
 --
 
 INSERT INTO `resource_requests` (`id_requests`, `user_id`, `project_name`, `resource_type`, `num_resources`, `skills`, `start_date`, `duration`, `priority`, `notes`, `status`, `created_at`) VALUES
-(3, 1, 'INVENTORY', 'developer', 5, 'PHP, DATABASE, PYTHON', '2025-10-19', '6months', 'high', 'expert', 'pending', '2025-10-19 11:24:11');
+(3, 1, 'INVENTORY', 'developer', 5, 'PHP, DATABASE, PYTHON', '2025-10-19', '6months', 'high', 'expert', 'pending', '2025-10-19 11:24:11'),
+(4, 1, 'POS', 'developer', 5, 'PHP, DATABASE, PYTHON', '2025-10-20', '6months', 'high', '', 'pending', '2025-10-20 13:33:39');
 
 -- --------------------------------------------------------
 
@@ -135,6 +174,21 @@ INSERT INTO `user_skills` (`id`, `user_id`, `skill_name`) VALUES
 --
 
 --
+-- Indexes for table `projects`
+--
+ALTER TABLE `projects`
+  ADD PRIMARY KEY (`project_id`),
+  ADD UNIQUE KEY `project_code` (`project_code`),
+  ADD KEY `created_by` (`created_by`);
+
+--
+-- Indexes for table `project_requirements`
+--
+ALTER TABLE `project_requirements`
+  ADD PRIMARY KEY (`requirement_id`),
+  ADD KEY `project_id` (`project_id`);
+
+--
 -- Indexes for table `resource_requests`
 --
 ALTER TABLE `resource_requests`
@@ -168,10 +222,22 @@ ALTER TABLE `user_skills`
 --
 
 --
+-- AUTO_INCREMENT for table `projects`
+--
+ALTER TABLE `projects`
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `project_requirements`
+--
+ALTER TABLE `project_requirements`
+  MODIFY `requirement_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `resource_requests`
 --
 ALTER TABLE `resource_requests`
-  MODIFY `id_requests` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_requests` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -194,6 +260,18 @@ ALTER TABLE `user_skills`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `projects`
+--
+ALTER TABLE `projects`
+  ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `project_requirements`
+--
+ALTER TABLE `project_requirements`
+  ADD CONSTRAINT `project_requirements_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `resource_requests`
