@@ -6,11 +6,10 @@ class ResourceRequestHandler {
         $this->conn = $db;
     }
 
-    public function submitRequest($data) {
+    public function submitRequest($data, $userId) {
         $query = "INSERT INTO resource_requests 
-        (project_name, resource_type, num_resources, skills, start_date, duration, priority, notes, status)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+            (user_id, project_name, resource_type, num_resources, skills, start_date, duration, priority, notes, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
         if (!$stmt) {
@@ -18,8 +17,10 @@ class ResourceRequestHandler {
         }
 
         $status = 'pending';
+
         $stmt->bind_param(
-            "ssissssss",
+            "ississssss",
+            $userId,
             $data['projectName'],
             $data['resourceType'],
             $data['numResources'],

@@ -11,10 +11,14 @@ class User extends Database {
 
         if ($result->num_rows > 0) {
             $user = $result->fetch_assoc();
+    
             if (password_verify($password, $user['password'])) {
                 session_start();
+    
+                $_SESSION['user_id'] = $user['id'];     
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
+
                 return ["success" => true, "role" => $user['role']];
             }
         }
