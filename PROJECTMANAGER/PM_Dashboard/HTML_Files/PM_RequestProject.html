@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/../PHP_Files/sidebar_profile.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +15,15 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="profile-circle">PM</div>
+            <div class="profile-circle" id="profile-circle">
+                <img 
+                    src="<?= htmlspecialchars($profilePic) ?>" 
+                    alt="Profile Picture"
+                >
+            </div>
             <div class="profile-info">
-                <h2>Project Manager</h2>
-                <p>Admin Portal</p>
+                <h2><?= htmlspecialchars($name) ?></h2>
+                <p><?= htmlspecialchars($email) ?></p>
             </div>
         </div>
         

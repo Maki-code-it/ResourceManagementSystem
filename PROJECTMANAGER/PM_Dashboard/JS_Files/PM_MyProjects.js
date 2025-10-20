@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadProjects() {
     try {
-        // Both JS_Files and PHP_Files are in PM_Dashboard, so go up one level then into PHP_Files
         const response = await fetch('../PHP_Files/Get_Projects.php');
         
         console.log('Response status:', response.status); // Debug log
