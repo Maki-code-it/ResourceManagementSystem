@@ -49,48 +49,38 @@ class ProjectManager {
     }
 
     public function getAllProjects() {
-        $query = "SELECT pr.*, 
-                  COUNT(DISTINCT pa.employee_id) as assigned_employees,
+        $query = "SELECT 
+                  id_requests as id,
+                  project_name,
+                  resource_type,
+                  num_resources as employees_needed,
+                  skills as required_skills,
+                  start_date,
+                  duration,
+                  priority,
+                  notes,
+                  status,
+                  created_at,
+                  0 as assigned_employees,
                   CASE 
-                      WHEN pr.status = 'approved' THEN 'Active'
-                      WHEN pr.status = 'pending' THEN 'In Progress'
-                      WHEN pr.status = 'rejected' THEN 'Rejected'
+                      WHEN status = 'approved' THEN 'Active'
+                      WHEN status = 'pending' THEN 'In Progress'
+                      WHEN status = 'rejected' THEN 'Rejected'
                   END as display_status
-                  FROM project_requests pr
-                  LEFT JOIN project_assignments pa ON pr.id = pa.request_id
-                  WHERE pr.manager_id = ?
-                  GROUP BY pr.id
-                  ORDER BY pr.created_at DESC";
+                  FROM resource_requests
+                  ORDER BY created_at DESC";
 
-        $stmt = $this->conn->prepare($query);
+        $result = $this->conn->query($query);
         
-        if (!$stmt) {
-            throw new Exception("Failed to prepare statement: " . $this->conn->error);
+        if (!$result) {
+            throw new Exception("Failed to execute query: " . $this->conn->error);
         }
-
-        $stmt->bind_param("i", $this->manager_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
         
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function getTeamMembers($request_id) {
-        $query = "SELECT u.name FROM users u
-                  INNER JOIN project_assignments pa ON u.id = pa.employee_id
-                  WHERE pa.request_id = ?";
-        
-        $stmt = $this->conn->prepare($query);
-        
-        if (!$stmt) {
-            throw new Exception("Failed to prepare statement: " . $this->conn->error);
-        }
-
-        $stmt->bind_param("i", $request_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return [];
     }
 
     public function calculateProgress($created_at, $duration, $status) {
@@ -100,8 +90,17 @@ class ProjectManager {
         
         $start = strtotime($created_at);
         $now = time();
-        $total_duration = $duration * 24 * 60 * 60;
         
+        $duration_days = 30;
+        if (preg_match('/(\d+)\s*month/i', $duration, $matches)) {
+            $duration_days = intval($matches[1]) * 30;
+        } elseif (preg_match('/(\d+)\s*week/i', $duration, $matches)) {
+            $duration_days = intval($matches[1]) * 7;
+        } elseif (preg_match('/(\d+)\s*day/i', $duration, $matches)) {
+            $duration_days = intval($matches[1]);
+        }
+        
+        $total_duration = $duration_days * 24 * 60 * 60;
         $elapsed = $now - $start;
         $progress = ($elapsed / $total_duration) * 100;
         
@@ -109,7 +108,16 @@ class ProjectManager {
     }
 
     public function getDeadline($created_at, $duration) {
-        return date('M d, Y', strtotime($created_at . " + $duration days"));
+        $duration_days = 30;
+        if (preg_match('/(\d+)\s*month/i', $duration, $matches)) {
+            $duration_days = intval($matches[1]) * 30;
+        } elseif (preg_match('/(\d+)\s*week/i', $duration, $matches)) {
+            $duration_days = intval($matches[1]) * 7;
+        } elseif (preg_match('/(\d+)\s*day/i', $duration, $matches)) {
+            $duration_days = intval($matches[1]);
+        }
+        
+        return date('M d, Y', strtotime($created_at . " + $duration_days days"));
     }
 
     public function getBadgeClass($display_status) {
@@ -122,6 +130,76 @@ class ProjectManager {
         }
         
         return $badge_class;
+    }
+
+    public function deleteProject($project_id) {
+        $query = "DELETE FROM resource_requests WHERE id_requests = ?";
+        $stmt = $this->conn->prepare($query);
+        
+        if (!$stmt) {
+            throw new Exception("Failed to prepare statement: " . $this->conn->error);
+        }
+
+        $stmt->bind_param("i", $project_id);
+        
+        if ($stmt->execute()) {
+            return ["status" => "success", "message" => "Project deleted successfully"];
+        } else {
+            throw new Exception("Failed to delete project: " . $stmt->error);
+        }
+    }
+
+    public function getProjectById($project_id) {
+        $query = "SELECT * FROM resource_requests WHERE id_requests = ?";
+        $stmt = $this->conn->prepare($query);
+        
+        if (!$stmt) {
+            throw new Exception("Failed to prepare statement: " . $this->conn->error);
+        }
+
+        $stmt->bind_param("i", $project_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        return $result->fetch_assoc();
+    }
+
+    public function updateProject($project_id, $data) {
+        $query = "UPDATE resource_requests 
+                  SET project_name = ?, 
+                      resource_type = ?, 
+                      num_resources = ?, 
+                      skills = ?, 
+                      start_date = ?, 
+                      duration = ?, 
+                      priority = ?, 
+                      notes = ?
+                  WHERE id_requests = ?";
+        
+        $stmt = $this->conn->prepare($query);
+        
+        if (!$stmt) {
+            throw new Exception("Failed to prepare statement: " . $this->conn->error);
+        }
+
+        $stmt->bind_param(
+            "ssisssssi",
+            $data['projectName'],
+            $data['resourceType'],
+            $data['numResources'],
+            $data['skills'],
+            $data['startDate'],
+            $data['duration'],
+            $data['priority'],
+            $data['notes'],
+            $project_id
+        );
+
+        if ($stmt->execute()) {
+            return ["status" => "success", "message" => "Project updated successfully"];
+        } else {
+            throw new Exception("Failed to update project: " . $stmt->error);
+        }
     }
 }
 ?>
